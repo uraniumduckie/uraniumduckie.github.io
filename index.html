@@ -8,28 +8,13 @@
     </title>
     <link rel="stylesheet" href="style.css">
   </head>
-  <body class="intro-active custom-scrollbar">
-    <div class="duck-intro" id="duck-intro">
-      <div class="intro-glow" aria-hidden="true"></div>
-      <div class="intro-beams" aria-hidden="true"></div>
-      <button class="intro-duck" id="intro-duck" type="button" aria-label="Click the duck to enter, 3 clicks remaining">
-        <img src="assets/duck.png" alt="" draggable="false">
-      </button>
-    </div>
-    <div id="pond" aria-hidden="true">
-    </div>
+  <body>
     <main>
       <article class="card">
         <figure class="profile-figure">
           <img class="profile-photo" src="assets/me.png" alt="Max" width="200" height="150">
           <figcaption>That's me ^^^</figcaption>
         </figure>
-        <div class="eyebrow">
-          Hey there!
-        </div>
-        <div class="hello">
-          Yes, you right here
-        </div>
         <h1>
           I'm Max!
         </h1>
@@ -78,7 +63,7 @@
                   <div class="website-info">
                     <h3>Phaleristics collection</h3>
                     <p>A catalog of my father's orders, medals, and badges collection with descriptions (WIP)</p>
-                    <a class="website-link" role="link" aria-disabled="true">Visit website <span aria-hidden="true">&#8599;</span></a>
+                    <a class="website-link" href="https://phaleristics.site" target="_blank" rel="noopener noreferrer">Visit website <span aria-hidden="true">&#8599;</span></a>
                   </div>
                 </article>
                 <article class="portfolio-entry website-panel">
@@ -88,7 +73,7 @@
                   <div class="website-info">
                     <h3>Doll portfolio</h3>
                     <p>A showcase of my mother's doll collection and related projects</p>
-                    <a class="website-link" role="link" aria-disabled="true">Visit website <span aria-hidden="true">&#8599;</span></a>
+                    <a class="website-link" href="https://mygrownchildhood.ru" target="_blank" rel="noopener noreferrer">Visit website <span aria-hidden="true">&#8599;</span></a>
                   </div>
                 </article>
                 <article class="portfolio-entry website-panel">
@@ -97,8 +82,8 @@
                   </div>
                   <div class="website-info">
                     <h3>Tank merge</h3>
-                    <p>One of the first websites I made, I game about merging tanks and even multiplayer (WIP)</p>
-                    <a class="website-link" role="link" aria-disabled="true">Visit website <span aria-hidden="true">&#8599;</span></a>
+                    <p>One of the first websites I made, a game about merging tanks and even multiplayer (WIP)</p>
+                    <a class="website-link" role="link" aria-disabled="true">Coming soon <span aria-hidden="true">&#8599;</span></a>
                   </div>
                 </article>
               </div>
@@ -172,9 +157,7 @@
         </div>
 
         <footer class="social-footer">
-          <p class="note">
-          Make yourself at home, my duckies already have
-        </p>
+          <p class="note">My soical media</p>
           <nav class="social-links" aria-label="Social profiles">
             <a class="social-button" href="https://t.me/makieduckie" target="_blank" rel="noopener noreferrer" aria-label="Telegram profile" title="Telegram">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M21.9 4.5 18.6 20c-.25 1.1-.9 1.36-1.82.85l-5.03-3.71-2.43 2.34c-.27.27-.5.5-1.02.5l.36-5.12 9.33-8.43c.41-.36-.09-.56-.63-.2L5.83 13.49.86 11.94c-1.08-.34-1.1-1.08.23-1.6L20.52 2.85c.9-.33 1.68.2 1.38 1.65Z"/></svg>
@@ -192,130 +175,7 @@
         </footer>
       </article>
     </main>
-    <div class="controls">
-      <span id="duck-count" aria-live="polite">20 ducks</span>
-      <div class="duck-count-buttons">
-        <button id="add-duck" type="button" aria-label="Add a duck" title="Add a duck"><img src="assets/plus.png" alt=""></button>
-        <button id="remove-duck" type="button" aria-label="Remove a duck" title="Remove a duck"><img src="assets/minus.png" alt=""></button>
-      </div>
-    </div>
     <script src="sound.js"></script>
-    <script src="intro.js"></script>
     <script src="accordion.js"></script>
-    <script>
-      const pond=document.querySelector('#pond');
-      function createDuck() {
-        const el = new Image();
-        el.src = 'assets/duck.png';
-        el.className = 'duck';
-        el.alt = '';
-        pond.append(el);
-        return {
-          el,
-          x: Math.random(),
-          y: Math.random(),
-          angle: Math.random() * Math.PI * 2,
-          target: Math.random() * Math.PI * 2,
-          speed: 12 + Math.random() * 16,
-          turn: 0
-        };
-      }
-
-      function duckParticles(duck) {
-        if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-
-        const size = duck.el.offsetWidth || 48;
-        const x = duck.x * Math.max(1, innerWidth - size) + size / 2;
-        const y = duck.y * Math.max(1, innerHeight - size) + size / 2;
-        const colors = ['#ffd21f', '#fffdf0', '#ffffff', '#1399c6'];
-
-        for (let i = 0; i < 24; i++) {
-          const particle = document.createElement('span');
-          particle.className = 'duck-particle';
-          particle.style.left = `${x}px`;
-          particle.style.top = `${y}px`;
-          particle.style.backgroundColor = colors[i % colors.length];
-          pond.append(particle);
-
-          const angle = (i / 24) * Math.PI * 2 + Math.random() * 0.3;
-          const distance = 45 + Math.random() * 65;
-          const animation = particle.animate([
-            { transform: 'translate(-50%, -50%) scale(0.6)', opacity: 1 },
-            { transform: `translate(calc(-50% + ${Math.cos(angle) * distance * 0.45}px), calc(-50% + ${Math.sin(angle) * distance * 0.45}px)) scale(1.2)`, opacity: 1, offset: 0.35 },
-            {
-              transform: `translate(calc(-50% + ${Math.cos(angle) * distance}px), calc(-50% + ${Math.sin(angle) * distance}px)) scale(0)`,
-              opacity: 0
-            }
-          ], { duration: 800 + Math.random() * 300, easing: 'ease-out' });
-
-          animation.onfinish = () => particle.remove();
-          animation.oncancel = () => particle.remove();
-        }
-      }
-
-      const ducks = Array.from({ length: 20 }, createDuck);
-      const duckCount = document.querySelector('#duck-count');
-      const removeDuckButton = document.querySelector('#remove-duck');
-
-      function updateDuckCount() {
-        duckCount.textContent = `${ducks.length} ${ducks.length === 1 ? 'duck' : 'ducks'}`;
-        removeDuckButton.disabled = ducks.length === 0;
-      }
-
-      document.querySelector('#add-duck').onclick = () => {
-        playQuack();
-        const duck = createDuck();
-        ducks.push(duck);
-        duckParticles(duck);
-        updateDuckCount();
-      };
-
-      removeDuckButton.onclick = () => {
-        const duck = ducks.pop();
-        if (duck) {
-          playQuack();
-          duckParticles(duck);
-          duck.el.remove();
-        }
-        updateDuckCount();
-      };
-
-      updateDuckCount();
-      let paused=matchMedia('(prefers-reduced-motion: reduce)').matches, last=0;
-      function frame(t) {
-        const dt=Math.min((t-last)/1000, .05);
-        last=t;
-        const w=innerWidth, h=innerHeight;
-        for(const d of ducks) {
-          const size=d.el.offsetWidth;
-          const bw=Math.max(1, w-size), bh=Math.max(1, h-size);
-          if(!paused) {
-            d.turn-=dt;
-            if(d.turn<=0) {
-              d.target=d.angle+(Math.random()-.5)*2;
-              d.turn=1+Math.random()*4
-            }
-            const delta=Math.atan2(Math.sin(d.target-d.angle), Math.cos(d.target-d.angle));
-            d.angle+=delta*Math.min(1, dt*1.4);
-            d.x+=Math.cos(d.angle)*d.speed*dt/bw;
-            d.y+=Math.sin(d.angle)*d.speed*dt/bh;
-            if(d.x<0||d.x>1) {
-              d.x=Math.max(0, Math.min(1, d.x));
-              d.angle=Math.PI-d.angle;
-              d.target=d.angle
-            }
-            if(d.y<0||d.y>1) {
-              d.y=Math.max(0, Math.min(1, d.y));
-              d.angle=-d.angle;
-              d.target=d.angle
-            }
-          }
-          d.el.style.transform=`translate(${d.x*bw}px,${d.y*bh}px) scaleX(${Math.cos(d.angle)<0?-1:1})`;
-        }
-        requestAnimationFrame(frame)
-      }
-      requestAnimationFrame(frame);
-    </script>
-    <script src="scrollbar.js"></script>
   </body>
 </html>
