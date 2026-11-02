@@ -1,6 +1,27 @@
+html:has(.art-page) {
+  background: #8eddf3 url('assets/background.png') center / cover fixed;
+}
+
 .art-page {
+  background: #8eddf3 url('assets/background.png') center / cover fixed;
   overflow: hidden;
   height: 100svh;
+}
+
+#art-pond {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.art-duck {
+  position: absolute;
+  width: clamp(34px, 4vw, 58px);
+  height: auto;
+  image-rendering: pixelated;
+  will-change: transform;
+  filter: drop-shadow(0 5px 0 #287b8c20);
 }
 
 .gallery-header {
